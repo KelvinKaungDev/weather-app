@@ -17,7 +17,7 @@
                             <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Search icon</span>
                         </div>
-                        <input type="text" id="search-navbar" class="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
+                        <input @keyup.enter="search()" v-model="inputData" type="text" id="search-navbar" class="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search...">
                     </div>
 
                     <button data-collapse-toggle="navbar-search" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-search" aria-expanded="false">
@@ -48,56 +48,45 @@
             </div>
         </nav>
 
-        <div class="grid w-full md:grid-cols-3 mt-14 justify-items-center">
+        <div class="grid w-full md:grid-cols-2 mt-14 justify-items-center">
 
-            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="border-2 border-white-500 p-8" v-if="showData">
+                <p class="text-5xl mt-20 text-white text-center">
+                    {{ cityName }}, {{ countryName }}
+                </p>
+                <p class="text-3xl text-white text-center mt-2">
+                    ({{ temperature }} &deg;C)
+                </p>
+
+                <ul class="list-disc text-white mt-16 grid w-full md:grid-cols-2">
+                    <li>City = {{ cityName }}</li>
+                    <li class="ml-10">Country = {{ countryName }}</li>
+                    <li>Temperature = {{ temperature }} &deg;C</li>
+                    <li class="ml-10">Condition = {{ condition }}</li>
+                    <li>Low Temperature = {{ lowTemp }} &deg;C</li>
+                    <li class="ml-10">Low Temperature = {{ highTemp }} &deg;C</li>
+                    <li>Feels Like = {{ feelLike }} &deg;C</li>
+                    <li class="ml-10">Humidity = {{ humidity }} &percnt;</li>
+                </ul>
+
+            </div>
+
+            <div class="p-8" v-else>
+                <p class="text-4xl mt-28 text-white text-center">
+                    Welcome to <span class="border-b-4">Kelvin Weather Focus</span>
+                </p>
+                <ul class="list-disc text-white mt-12 ml-20">
+                    <li>You can search the city's humidity that you want</li>
+                    <li>You can know the city's temperature that you want</li>
+                    <li>Don't be hesitate. Just search and you can know everything you want</li>
+                </ul>
+            </div>
+
+            <div class="scale-75 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-90 duration-300">
                 <a href="#">
                     <img class="rounded-t-lg" src="../img/sunny.jpg" alt="">
                 </a>
-                <div class="p-5">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    <a href="#" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Read more
-                        <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </a>
-                </div>
             </div>
-
-            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <a href="#">
-                    <img class="rounded-t-lg" src="../img/windy.jpg" alt="">
-                </a>
-                <div class="p-5">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    <a href="#" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Read more
-                        <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <a href="#">
-                    <img class="rounded-t-lg" src="../img/cloudy.jpg" alt="">
-                </a>
-                <div class="p-5">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                    <a href="#" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Read more
-                        <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </a>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -108,7 +97,43 @@
 </template>
 
 <script>
+import axios from 'axios';
     export default {
         name : 'HomeView',
+        data () {
+            return {
+                inputData  : '',
+                countryName: '',
+                cityName   : '',
+                temperature: '',
+                condition  : '',
+                lowTemp    : '',
+                highTemp   : '',
+                feelLike   : '',
+                humidity   : '',
+                showData   : false,
+                apiKey     : 'b6af36398d3c9dd99142e3078377c053',
+            }
+        },
+        methods: {
+            search () {
+                axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.inputData}&appid=${this.apiKey}&units=metric`)
+                .then(response => {
+                    const data = response.data;
+
+                    this.cityName = data.name;
+                    this.countryName    = data.sys.country;
+                    this.temperature = Math.round(data.main.temp);
+                    this.condition   = data.weather[0].description;
+                    this.lowTemp     = Math.round(data.main.temp_min);
+                    this.highTemp    = Math.round(data.main.temp_max);
+                    this.feelLike    = Math.round(data.main.feels_like);
+                    this.humidity    = Math.round(data.main.humidity);
+
+                    this.inputData = '';
+                    this.showData  = true;
+                })
+            }
+        }
     }
 </script>
